@@ -5951,6 +5951,10 @@ if (e.indexOf("http://") != -1 || e.indexOf("https://") != -1) return this.doPan
 panel: "url",
 url: e
 }), !0;
+if (e.indexOf("www.") != -1) return this.doPanelChanged({
+panel: "url",
+url: "http://" + e
+}), !0;
 if (e.indexOf("mailto:") != -1 || e.indexOf("@") != -1) return this.doPanelChanged({
 panel: "mail",
 url: e

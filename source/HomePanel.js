@@ -88,6 +88,14 @@ enyo.kind({
             return true;
         }
 
+        // Check for URL
+        if (inData.indexOf("www.") != -1) {
+            // it is a URL!!! View it.
+            this.doPanelChanged({panel: "url", url: "http://" + inData});
+            return true;
+        }
+
+
         // Check for mail
         if (inData.indexOf("mailto:") != -1 || inData.indexOf("@") != -1) {
             this.doPanelChanged({panel: "mail", url: inData});
