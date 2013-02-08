@@ -1,5 +1,5 @@
 
-/* /Users/soapdog/PhpstormProjects/QRDecoder/enyo/../lib/layout/fittable/source/FittableLayout.css */
+/* /Users/soapdog/prog/QRDecoder/enyo/../lib/layout/fittable/source/FittableLayout.css */
 
 .enyo-fittable-rows-layout {
 	position: relative;
@@ -71,7 +71,7 @@
 	margin-bottom: 0 !important;
 }
 
-/* /Users/soapdog/PhpstormProjects/QRDecoder/enyo/../lib/layout/list/source/List.css */
+/* /Users/soapdog/prog/QRDecoder/enyo/../lib/layout/list/source/List.css */
 
 .enyo-list {
 	position: relative;
@@ -89,7 +89,7 @@
 	right: 0;
 }
 
-/* /Users/soapdog/PhpstormProjects/QRDecoder/enyo/../lib/layout/list/source/PulldownList.css */
+/* /Users/soapdog/prog/QRDecoder/enyo/../lib/layout/list/source/PulldownList.css */
 
 .enyo-list-pulldown {
 	position: absolute;
@@ -152,7 +152,7 @@
 	-ms-transform: rotate(180deg);
 }
 
-/* /Users/soapdog/PhpstormProjects/QRDecoder/enyo/../lib/layout/panels/source/arrangers/Arranger.css */
+/* /Users/soapdog/prog/QRDecoder/enyo/../lib/layout/panels/source/arrangers/Arranger.css */
 
 .enyo-arranger {
 	position: relative;
@@ -185,7 +185,7 @@
 }
 
 
-/* /Users/soapdog/PhpstormProjects/QRDecoder/enyo/../lib/layout/panels/source/Panels.css */
+/* /Users/soapdog/prog/QRDecoder/enyo/../lib/layout/panels/source/Panels.css */
 
 .enyo-panels {
 }
@@ -200,7 +200,7 @@
 	}
 }
 
-/* /Users/soapdog/PhpstormProjects/QRDecoder/enyo/../lib/layout/tree/source/Node.css */
+/* /Users/soapdog/prog/QRDecoder/enyo/../lib/layout/tree/source/Node.css */
 
 .enyo-node {
 	cursor: default;
@@ -232,7 +232,7 @@
 }
 
 
-/* /Users/soapdog/PhpstormProjects/QRDecoder/enyo/../lib/layout/imageview/source/ImageViewPin.css */
+/* /Users/soapdog/prog/QRDecoder/enyo/../lib/layout/imageview/source/ImageViewPin.css */
 
 
 .pinDebug {
@@ -240,7 +240,7 @@
 	border:1px solid yellow;
 }
 
-/* /Users/soapdog/PhpstormProjects/QRDecoder/enyo/../lib/onyx/css/onyx.less */
+/* /Users/soapdog/prog/QRDecoder/enyo/../lib/onyx/css/onyx.less */
 
 /* Onyx default parameters defined here */
 /* Fonts */
@@ -1389,7 +1389,7 @@
 }
 
 
-/* /Users/soapdog/PhpstormProjects/QRDecoder/enyo/../lib/webos-ports-lib/source/PortsHeader.css */
+/* /Users/soapdog/prog/QRDecoder/enyo/../lib/webos-ports-lib/source/PortsHeader.css */
 
 .ports-header {
 	height: 54px;
@@ -1397,7 +1397,7 @@
 }
 
 
-/* /Users/soapdog/PhpstormProjects/QRDecoder/enyo/../lib/webos-ports-lib/source/ProgressOrb.css */
+/* /Users/soapdog/prog/QRDecoder/enyo/../lib/webos-ports-lib/source/ProgressOrb.css */
 
 .pie {
 	position: absolute;

@@ -1,7 +1,7 @@
 
 // minifier: path aliases
 
-enyo.path.addPaths({layout: "/Users/soapdog/PhpstormProjects/QRDecoder/enyo/../lib/layout/", onyx: "/Users/soapdog/PhpstormProjects/QRDecoder/enyo/../lib/onyx/", onyx: "/Users/soapdog/PhpstormProjects/QRDecoder/enyo/../lib/onyx/source/", jsqrcode: "/Users/soapdog/PhpstormProjects/QRDecoder/enyo/../lib/jsqrcode/", webapi: "/Users/soapdog/PhpstormProjects/QRDecoder/enyo/../lib/webapi/", webappinstaller: "/Users/soapdog/PhpstormProjects/QRDecoder/enyo/../lib/webappinstaller/", pixastic: "/Users/soapdog/PhpstormProjects/QRDecoder/enyo/../lib/pixastic/"});
+enyo.path.addPaths({layout: "/Users/soapdog/prog/QRDecoder/enyo/../lib/layout/", onyx: "/Users/soapdog/prog/QRDecoder/enyo/../lib/onyx/", onyx: "/Users/soapdog/prog/QRDecoder/enyo/../lib/onyx/source/", g11n: "/Users/soapdog/prog/QRDecoder/enyo/../lib/g11n/", jsqrcode: "/Users/soapdog/prog/QRDecoder/enyo/../lib/jsqrcode/", webapi: "/Users/soapdog/prog/QRDecoder/enyo/../lib/webapi/", webappinstaller: "/Users/soapdog/prog/QRDecoder/enyo/../lib/webappinstaller/", pixastic: "/Users/soapdog/prog/QRDecoder/enyo/../lib/pixastic/"});
 
 // FittableLayout.js
 
@@ -3807,6 +3807,1059 @@ this.setShowing(!1);
 }
 });
 
+// javascript/g11n.js
+
+if (!this.enyo) {
+this.enyo = {};
+var empty = {};
+enyo.mixin = function(e, t) {
+e = e || {};
+if (t) {
+var n, r;
+for (n in t) r = t[n], empty[n] !== r && (e[n] = r);
+}
+return e;
+};
+}
+
+"trim" in String.prototype || (String.prototype.trim = function() {
+return this.replace(/^\s+|\s+$/g, "");
+}), enyo.g11n = function() {}, enyo.g11n._init = function() {
+if (!enyo.g11n._initialized) {
+typeof window != "undefined" ? (enyo.g11n._platform = "browser", enyo.g11n._enyoAvailable = !0) : (enyo.g11n._platform = "node", enyo.g11n._enyoAvailable = !1);
+if (navigator) {
+var t = (navigator.language || navigator.userLanguage).replace(/-/g, "_").toLowerCase();
+enyo.g11n._locale = new enyo.g11n.Locale(t), enyo.g11n._formatLocale = enyo.g11n._locale, enyo.g11n._phoneLocale = enyo.g11n._locale;
+}
+enyo.g11n._locale === undefined && (enyo.warn("enyo.g11n._init: could not find current locale, so using default of en_us."), enyo.g11n._locale = new enyo.g11n.Locale("en_us")), enyo.g11n._formatLocale === undefined && (enyo.warn("enyo.g11n._init: could not find current formats locale, so using default of us."), enyo.g11n._formatLocale = new enyo.g11n.Locale("en_us")), enyo.g11n._phoneLocale === undefined && (enyo.warn("enyo.g11n._init: could not find current phone locale, so defaulting to the same thing as the formats locale."), enyo.g11n._phoneLocale = enyo.g11n._formatLocale), enyo.g11n._sourceLocale === undefined && (enyo.g11n._sourceLocale = new enyo.g11n.Locale("en_us")), enyo.g11n._initialized = !0;
+}
+}, enyo.g11n.getPlatform = function() {
+return enyo.g11n._platform || enyo.g11n._init(), enyo.g11n._platform;
+}, enyo.g11n.isEnyoAvailable = function() {
+return enyo.g11n._enyoAvailable || enyo.g11n._init(), enyo.g11n._enyoAvailable;
+}, enyo.g11n.currentLocale = function() {
+return enyo.g11n._locale || enyo.g11n._init(), enyo.g11n._locale;
+}, enyo.g11n.formatLocale = function() {
+return enyo.g11n._formatLocale || enyo.g11n._init(), enyo.g11n._formatLocale;
+}, enyo.g11n.phoneLocale = function() {
+return enyo.g11n._phoneLocale || enyo.g11n._init(), enyo.g11n._phoneLocale;
+}, enyo.g11n.sourceLocale = function() {
+return enyo.g11n._sourceLocale || enyo.g11n._init(), enyo.g11n._sourceLocale;
+}, enyo.g11n.setLocale = function(t) {
+t && (enyo.g11n._init(), t.uiLocale && (enyo.g11n._locale = new enyo.g11n.Locale(t.uiLocale)), t.formatLocale && (enyo.g11n._formatLocale = new enyo.g11n.Locale(t.formatLocale)), t.phoneLocale && (enyo.g11n._phoneLocale = new enyo.g11n.Locale(t.phoneLocale)), t.sourceLocale && (enyo.g11n._sourceLocale = new enyo.g11n.Locale(t.sourceLocale)), enyo.g11n._enyoAvailable && enyo.reloadG11nResources());
+};
+
+// javascript/fmts.js
+
+enyo.g11n.Fmts = function(t) {
+var n;
+typeof t == "undefined" || !t.locale ? this.locale = enyo.g11n.formatLocale() : typeof t.locale == "string" ? this.locale = new enyo.g11n.Locale(t.locale) : this.locale = t.locale, this.dateTimeFormatHash = enyo.g11n.Utils.getJsonFile({
+root: enyo.g11n.Utils._getEnyoRoot(),
+path: "base/formats",
+locale: this.locale,
+type: "region"
+}), this.dateTimeHash = enyo.g11n.Utils.getJsonFile({
+root: enyo.g11n.Utils._getEnyoRoot(),
+path: "base/datetime_data",
+locale: this.locale
+}), this.dateTimeHash || (this.dateTimeHash = enyo.g11n.Utils.getJsonFile({
+root: enyo.g11n.Utils._getEnyoRoot(),
+path: "base/datetime_data",
+locale: enyo.g11n.currentLocale()
+})), this.dateTimeHash || (this.dateTimeHash = enyo.g11n.Utils.getJsonFile({
+root: enyo.g11n.Utils._getEnyoRoot(),
+path: "base/datetime_data",
+locale: new enyo.g11n.Locale("en_us")
+}));
+}, enyo.g11n.Fmts.prototype.isAmPm = function() {
+return typeof this.twelveHourFormat == "undefined" && (this.twelveHourFormat = this.dateTimeFormatHash.is12HourDefault), this.twelveHourFormat;
+}, enyo.g11n.Fmts.prototype.isAmPmDefault = function() {
+return this.dateTimeFormatHash.is12HourDefault;
+}, enyo.g11n.Fmts.prototype.getFirstDayOfWeek = function() {
+return this.dateTimeFormatHash.firstDayOfWeek;
+}, enyo.g11n.Fmts.prototype.getDateFieldOrder = function() {
+return this.dateTimeFormatHash ? this.dateTimeFormatHash.dateFieldOrder : (enyo.warn("Failed to load date time format hash"), "mdy");
+}, enyo.g11n.Fmts.prototype.getTimeFieldOrder = function() {
+return this.dateTimeFormatHash ? this.dateTimeFormatHash.timeFieldOrder : (enyo.warn("Failed to load date time format hash"), "hma");
+}, enyo.g11n.Fmts.prototype.getMonthFields = function() {
+return this.dateTimeHash ? this.dateTimeHash.medium.month : [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+}, enyo.g11n.Fmts.prototype.getAmCaption = function() {
+return this.dateTimeHash ? this.dateTimeHash.am : (enyo.error("Failed to load dateTimeHash."), "AM");
+}, enyo.g11n.Fmts.prototype.getPmCaption = function() {
+return this.dateTimeHash ? this.dateTimeHash.pm : (enyo.error("Failed to load dateTimeHash."), "PM");
+}, enyo.g11n.Fmts.prototype.getMeasurementSystem = function() {
+return this.dateTimeFormatHash && this.dateTimeFormatHash.measurementSystem || "metric";
+}, enyo.g11n.Fmts.prototype.getDefaultPaperSize = function() {
+return this.dateTimeFormatHash && this.dateTimeFormatHash.defaultPaperSize || "A4";
+}, enyo.g11n.Fmts.prototype.getDefaultPhotoSize = function() {
+return this.dateTimeFormatHash && this.dateTimeFormatHash.defaultPhotoSize || "10X15CM";
+}, enyo.g11n.Fmts.prototype.getDefaultTimeZone = function() {
+return this.dateTimeFormatHash && this.dateTimeFormatHash.defaultTimeZone || "Europe/London";
+}, enyo.g11n.Fmts.prototype.isAsianScript = function() {
+return this.dateTimeFormatHash && typeof this.dateTimeFormatHash.asianScript != "undefined" ? this.dateTimeFormatHash.asianScript : !1;
+}, enyo.g11n.Fmts.prototype.isHanTraditional = function() {
+return this.dateTimeFormatHash && typeof this.dateTimeFormatHash.scriptStyle != "undefined" ? this.dateTimeFormatHash.scriptStyle === "traditional" : !1;
+}, enyo.g11n.Fmts.prototype.textDirection = function() {
+return this.dateTimeFormatHash && this.dateTimeFormatHash.scriptDirection || "ltr";
+};
+
+// javascript/locale.js
+
+enyo.g11n.Locale = function(t) {
+var n = t ? t.split(/_/) : [];
+return this.locale = t, this.language = n[0] || undefined, this.region = n[1] ? n[1].toLowerCase() : undefined, this.variant = n[2] ? n[2].toLowerCase() : undefined, this;
+}, enyo.g11n.Locale.prototype.getLocale = function() {
+return this.locale;
+}, enyo.g11n.Locale.prototype.getLanguage = function() {
+return this.language;
+}, enyo.g11n.Locale.prototype.getRegion = function() {
+return this.region;
+}, enyo.g11n.Locale.prototype.getVariant = function() {
+return this.variant;
+}, enyo.g11n.Locale.prototype.toString = function() {
+return this.locale || (this.locale = this.language + "_" + this.region, this.variant && (this.locale = this.locale + "_" + this.variant)), this.locale;
+}, enyo.g11n.Locale.prototype.toISOString = function() {
+var e = this.language || "";
+return this.region && (e += "_" + this.region.toUpperCase()), this.variant && (e += "_" + this.variant.toUpperCase()), e;
+}, enyo.g11n.Locale.prototype.isMatch = function(e) {
+return e.language && e.region ? (!this.language || this.language === e.language) && (!this.region || this.region === e.region) : e.language ? !this.language || this.language === e.language : !this.region || this.region === e.region;
+}, enyo.g11n.Locale.prototype.equals = function(e) {
+return this.language === e.language && this.region === e.region && this.variant === e.variant;
+}, enyo.g11n.Locale.prototype.useDefaultLang = function() {
+var e, t, n;
+this.language || (e = enyo.g11n.Utils.getNonLocaleFile({
+root: enyo.g11n.Utils._getEnyoRoot(),
+path: "base/formats/defLangs.json"
+}), t = e && e[this.region], t || (n = enyo.g11n.currentLocale(), t = n.language), this.language = t || "en", this.locale = this.language + "_" + this.region);
+};
+
+// javascript/loadfile.js
+
+enyo.g11n.Utils = enyo.g11n.Utils || function() {}, enyo.g11n.Utils._fileCache = {}, enyo.g11n.Utils._getBaseURL = function(e) {
+if ("baseURI" in e) return e.baseURI;
+var t = e.getElementsByTagName("base");
+return t.length > 0 ? t[0].href : window.location.href;
+}, enyo.g11n.Utils._fetchAppRootPath = function() {
+var e = window.document, t = enyo.g11n.Utils._getBaseURL(e).match(new RegExp(".*://[^#]*/"));
+if (t) return t[0];
+}, enyo.g11n.Utils._setRoot = function(t) {
+var n = t;
+return !t && enyo.g11n.isEnyoAvailable() ? n = enyo.g11n.Utils._fetchAppRootPath() + "assets" : n = ".", enyo.g11n.root = n;
+}, enyo.g11n.Utils._getRoot = function() {
+return enyo.g11n.root || enyo.g11n.Utils._setRoot();
+}, enyo.g11n.Utils._getEnyoRoot = function(t) {
+var n = "";
+return !enyo.g11n.isEnyoAvailable() && t && (n = t), n + enyo.path.paths.enyo + "/../lib/g11n/source";
+}, enyo.g11n.Utils._loadFile = function(t) {
+var n, r, i = enyo.g11n.getPlatform();
+if (i === "node") try {
+this.fs || (this.fs = IMPORTS.require("fs")), r = this.fs.readFileSync(t, "utf8"), r && (n = JSON.parse(r));
+} catch (s) {
+n = undefined;
+} else try {
+n = JSON.parse(enyo.xhr.request({
+url: t,
+sync: !0
+}).responseText);
+} catch (o) {}
+return n;
+}, enyo.g11n.Utils.getNonLocaleFile = function(t) {
+var n, r, i;
+if (!t || !t.path) return undefined;
+t.path.charAt(0) !== "/" ? (r = t.root || this._getRoot(), i = r + "/" + t.path) : i = t.path;
+if (enyo.g11n.Utils._fileCache[i] !== undefined) n = enyo.g11n.Utils._fileCache[i].json; else {
+n = enyo.g11n.Utils._loadFile(i);
+if (t.cache === undefined || t.cache !== !1) enyo.g11n.Utils._fileCache[i] = {
+path: i,
+json: n,
+locale: undefined,
+timestamp: new Date
+}, this.oldestStamp === undefined && (this.oldestStamp = enyo.g11n.Utils._fileCache[i].timestamp);
+}
+return n;
+}, enyo.g11n.Utils.getJsonFile = function(t) {
+var n, r, i, s, o, u, a, f, l;
+if (!t || !t.path || !t.locale) return undefined;
+i = t.path.charAt(0) !== "/" ? t.root || this._getRoot() : "", i.slice(-1) !== "/" && (i += "/"), t.path ? (s = t.path, s.slice(-1) !== "/" && (s += "/")) : s = "", s += t.prefix || "", i += s, l = i + t.locale.toString() + ".json";
+if (enyo.g11n.Utils._fileCache[l] !== undefined) n = enyo.g11n.Utils._fileCache[l].json; else {
+t.merge ? (t.locale.language && (r = i + t.locale.language + ".json", o = this._loadFile(r)), t.locale.region && (r = i + t.locale.language + "_" + t.locale.region + ".json", u = this._loadFile(r), t.locale.language !== t.locale.region && (r = i + t.locale.region + ".json", a = this._loadFile(r))), t.locale.variant && (r = i + t.locale.language + "_" + t.locale.region + "_" + t.locale.variant + ".json", f = this._loadFile(r)), n = this._merge([ o, a, u, f ])) : (r = i + t.locale.toString() + ".json", n = this._loadFile(r), !n && t.type !== "region" && t.locale.language && (r = i + t.locale.language + ".json", n = this._loadFile(r)), !n && t.type !== "language" && t.locale.region && (r = i + t.locale.region + ".json", n = this._loadFile(r)), !n && t.type !== "language" && t.locale.region && (r = i + "_" + t.locale.region + ".json", n = this._loadFile(r)));
+if (t.cache === undefined || t.cache !== !1) enyo.g11n.Utils._fileCache[l] = {
+path: l,
+json: n,
+locale: t.locale,
+timestamp: new Date
+}, this.oldestStamp === undefined && (this.oldestStamp = enyo.g11n.Utils._fileCache[l].timestamp);
+}
+return n;
+}, enyo.g11n.Utils._merge = function(t) {
+var n, r, i = {};
+for (n = 0, r = t.length; n < r; n++) i = enyo.mixin(i, t[n]);
+return i;
+}, enyo.g11n.Utils.releaseAllJsonFiles = function(t, n) {
+var r = new Date, i = [], s, o, u, a;
+t = t || 6e4;
+if (this.oldestStamp !== undefined && this.oldestStamp.getTime() + t < r.getTime()) {
+s = r;
+for (o in enyo.g11n.Utils._fileCache) o && enyo.g11n.Utils._fileCache[o] && (a = enyo.g11n.Utils._fileCache[o], !a.locale || n || !enyo.g11n.currentLocale().isMatch(a.locale) && !enyo.g11n.formatLocale().isMatch(a.locale) && !enyo.g11n.phoneLocale().isMatch(a.locale) ? a.timestamp.getTime() + t < r.getTime() ? i.push(a.path) : a.timestamp.getTime() < s.getTime() && (s = a.timestamp) : a.timestamp.getTime() < s.getTime() && (s = a.timestamp));
+this.oldestStamp = s.getTime() < r.getTime() ? s : undefined;
+for (u = 0; u < i.length; u++) enyo.g11n.Utils._fileCache[i[u]] = undefined;
+}
+return i.length;
+}, enyo.g11n.Utils._cacheSize = function() {
+var t = 0, n;
+for (n in enyo.g11n.Utils._fileCache) enyo.g11n.Utils._fileCache[n] && t++;
+return t;
+};
+
+// javascript/template.js
+
+enyo.g11n.Template = function(e, t) {
+this.template = e, this.pattern = t || /(.?)(#\{(.*?)\})/;
+}, enyo.g11n.Template.prototype._evalHelper = function(e, t) {
+function s(e) {
+return e === undefined || e === null ? "" : e;
+}
+function o(e, n, r) {
+var i = t, o, u;
+e = s(e);
+if (e === "\\") return n;
+o = r.split("."), u = o.shift();
+while (i && u) {
+i = i[u], u = o.shift();
+if (!u) return e + s(i) || e || "";
+}
+return e || "";
+}
+var n = [], r = this.pattern, i;
+if (!t || !e) return "";
+while (e.length) i = e.match(r), i ? (n.push(e.slice(0, i.index)), n.push(o(i[1], i[2], i[3])), e = e.slice(i.index + i[0].length)) : (n.push(e), e = "");
+return n.join("");
+}, enyo.g11n.Template.prototype.evaluate = function(e) {
+return this._evalHelper(this.template, e);
+}, enyo.g11n.Template.prototype.formatChoice = function(e, t) {
+try {
+var n = this.template ? this.template.split("|") : [], r = [], i = [], s = "", o;
+t = t || {};
+for (o = 0; o < n.length; o++) {
+var u = enyo.indexOf("#", n[o]);
+if (u !== -1) {
+r[o] = n[o].substring(0, u), i[o] = n[o].substring(u + 1);
+if (e == r[o]) return this._evalHelper(i[o], t);
+r[o] === "" && (s = i[o]);
+}
+}
+for (o = 0; o < r.length; o++) {
+var a = r[o];
+if (a) {
+var f = a.charAt(a.length - 1), l = parseFloat(a);
+if (f === "<" && e < l || f === ">" && e > l) return this._evalHelper(i[o], t);
+}
+}
+return this._evalHelper(s, t);
+} catch (c) {
+return enyo.error("formatChoice error : ", c), "";
+}
+};
+
+// javascript/resources.js
+
+$L = function(e) {
+return $L._resources || ($L._resources = new enyo.g11n.Resources), $L._resources.$L(e);
+}, $L._resources = null, enyo.g11n.Resources = function(e) {
+e && e.root && (this.root = typeof window != "undefined" ? enyo.path.rewrite(e.root) : e.root), this.root = this.root || enyo.g11n.Utils._getRoot(), this.resourcePath = this.root + "/resources/", e && e.locale ? this.locale = typeof e.locale == "string" ? new enyo.g11n.Locale(e.locale) : e.locale : this.locale = enyo.g11n.currentLocale(), this.$L = this.locale.toString() === "en_pl" ? this._pseudo : this._$L, this.localizedResourcePath = this.resourcePath + this.locale.locale + "/", this.languageResourcePath = this.resourcePath + (this.locale.language ? this.locale.language + "/" : ""), this.regionResourcePath = this.languageResourcePath + (this.locale.region ? this.locale.region + "/" : ""), this.carrierResourcePath = this.regionResourcePath + (this.locale.variant ? this.locale.variant + "/" : "");
+}, enyo.g11n.Resources.prototype.getResource = function(e) {
+var t;
+if (this.carrierResourcePath) try {
+t = enyo.g11n.Utils.getNonLocaleFile({
+path: this.carrierResourcePath + e
+});
+} catch (n) {
+t = undefined;
+}
+if (!t) try {
+t = enyo.g11n.Utils.getNonLocaleFile({
+path: this.regionResourcePath + e
+});
+} catch (r) {
+t = undefined;
+}
+if (!t) try {
+t = enyo.g11n.Utils.getNonLocaleFile({
+path: this.languageResourcePath + e
+});
+} catch (i) {
+t = undefined;
+}
+if (!t) try {
+t = enyo.g11n.Utils.getNonLocaleFile({
+path: this.resourcePath + "en/" + e
+});
+} catch (s) {
+t = undefined;
+}
+if (!t) try {
+t = enyo.g11n.Utils.getNonLocaleFile({
+path: this.root + "/" + e
+});
+} catch (o) {
+t = undefined;
+}
+return t;
+}, enyo.g11n.Resources.prototype.$L = function(e) {}, enyo.g11n.Resources.prototype._$L = function(e) {
+var t, n;
+return e ? this.locale.equals(enyo.g11n.sourceLocale()) ? typeof e == "string" ? e : e.value : (this.strings || this._loadStrings(), typeof e == "string" ? (t = e, n = e) : (t = e.key, n = e.value), this.strings && typeof this.strings[t] != "undefined" ? this.strings[t] : n) : "";
+}, enyo.g11n.Resources.prototype._pseudo = function(e) {
+var t, n;
+if (!e) return "";
+n = "";
+for (t = 0; t < e.length; t++) if (e.charAt(t) === "#" && t + 1 < e.length && e.charAt(t + 1) === "{") {
+while (e.charAt(t) !== "}" && t < e.length) n += e.charAt(t++);
+t < e.length && (n += e.charAt(t));
+} else if (e.charAt(t) === "<") {
+while (e.charAt(t) !== ">" && t < e.length) n += e.charAt(t++);
+t < e.length && (n += e.charAt(t));
+} else if (e.charAt(t) === "&" && t + 1 < e.length && !enyo.g11n.Char.isSpace(e.charAt(t + 1))) {
+while (e.charAt(t) !== ";" && !enyo.g11n.Char.isSpace(e.charAt(t)) && t < e.length) n += e.charAt(t++);
+t < e.length && (n += e.charAt(t));
+} else n += enyo.g11n.Resources._pseudoMap[e.charAt(t)] || e.charAt(t);
+return n;
+}, enyo.g11n.Resources.prototype._loadStrings = function() {
+this.strings = enyo.g11n.Utils.getJsonFile({
+root: this.root,
+path: "resources",
+locale: this.locale,
+merge: !0
+}), enyo.g11n.Utils.releaseAllJsonFiles();
+}, enyo.g11n.Resources._pseudoMap = {
+a: "\u00e1",
+e: "\u00e8",
+i: "\u00ef",
+o: "\u00f5",
+u: "\u00fb",
+c: "\u00e7",
+A: "\u00c5",
+E: "\u00cb",
+I: "\u00ce",
+O: "\u00d5",
+U: "\u00db",
+C: "\u00c7",
+B: "\u00df",
+y: "\u00ff",
+Y: "\u00dd",
+D: "\u010e",
+d: "\u0111",
+g: "\u011d",
+G: "\u011c",
+H: "\u0124",
+h: "\u0125",
+J: "\u0134",
+j: "\u0135",
+K: "\u0136",
+k: "\u0137",
+N: "\u00d1",
+n: "\u00f1",
+S: "\u015e",
+s: "\u015f",
+T: "\u0164",
+t: "\u0165",
+W: "\u0174",
+w: "\u0175",
+Z: "\u0179",
+z: "\u017a"
+};
+
+// javascript/character.js
+
+enyo.g11n.Char = enyo.g11n.Char || {}, enyo.g11n.Char._strTrans = function(t, n) {
+var r = "", i, s;
+for (s = 0; s < t.length; s++) i = n[t.charAt(s)], r += i || t.charAt(s);
+return r;
+}, enyo.g11n.Char._objectIsEmpty = function(e) {
+var t;
+for (t in e) return !1;
+return !0;
+}, enyo.g11n.Char._isIdeoLetter = function(e) {
+return e >= 19968 && e <= 40907 || e >= 63744 && e <= 64217 || e >= 13312 && e <= 19893 || e >= 12353 && e <= 12447 || e >= 12449 && e <= 12543 || e >= 65382 && e <= 65437 || e >= 12784 && e <= 12799 || e >= 12549 && e <= 12589 || e >= 12704 && e <= 12727 || e >= 12593 && e <= 12686 || e >= 65440 && e <= 65500 || e >= 44032 && e <= 55203 || e >= 40960 && e <= 42124 || e >= 4352 && e <= 4607 || e >= 43360 && e <= 43388 || e >= 55216 && e <= 55291 ? !0 : !1;
+}, enyo.g11n.Char._isIdeoOther = function(e) {
+return e >= 42125 && e <= 42191 || e >= 12544 && e <= 12548 || e >= 12590 && e <= 12591 || e >= 64218 && e <= 64255 || e >= 55292 && e <= 55295 || e >= 40908 && e <= 40959 || e >= 43389 && e <= 43391 || e >= 12800 && e <= 13055 || e >= 13056 && e <= 13183 || e >= 13184 && e <= 13311 || e === 12592 || e === 12687 || e === 12448 || e === 12352 || e === 12294 || e === 12348 ? !0 : !1;
+}, enyo.g11n.Char.isIdeo = function(t) {
+var n;
+return !t || t.length < 1 ? !1 : (n = t.charCodeAt(0), enyo.g11n.Char._isIdeoLetter(n) || enyo.g11n.Char._isIdeoOther(n));
+}, enyo.g11n.Char.isPunct = function(t) {
+var n, r;
+return !t || t.length < 1 ? !1 : (n = enyo.g11n.Utils.getNonLocaleFile({
+root: enyo.g11n.Utils._getEnyoRoot(),
+path: "base/character_data/chartype.punct.json"
+}), r = n && t.charAt(0) in n, enyo.g11n.Utils.releaseAllJsonFiles(), r);
+}, enyo.g11n.Char._space = {
+9: 1,
+10: 1,
+11: 1,
+12: 1,
+13: 1,
+32: 1,
+133: 1,
+160: 1,
+5760: 1,
+6158: 1,
+8192: 1,
+8193: 1,
+8194: 1,
+8195: 1,
+8196: 1,
+8197: 1,
+8198: 1,
+8199: 1,
+8200: 1,
+8201: 1,
+8202: 1,
+8232: 1,
+8233: 1,
+8239: 1,
+8287: 1,
+12288: 1
+}, enyo.g11n.Char.isSpace = function(t) {
+var n;
+return !t || t.length < 1 ? !1 : (n = t.charCodeAt(0), n in enyo.g11n.Char._space);
+}, enyo.g11n.Char.toUpper = function(t, n) {
+var r;
+if (!t) return undefined;
+n || (n = enyo.g11n.currentLocale()), r = enyo.g11n.Utils.getJsonFile({
+root: enyo.g11n.Utils._getEnyoRoot(),
+path: "base/character_data",
+locale: n
+});
+if (!r || !r.upperMap) r = enyo.g11n.Utils.getJsonFile({
+root: enyo.g11n.Utils._getEnyoRoot(),
+path: "base/character_data",
+locale: new enyo.g11n.Locale("en")
+});
+return r && r.upperMap !== undefined ? enyo.g11n.Char._strTrans(t, r.upperMap) : (enyo.g11n.Utils.releaseAllJsonFiles(), t);
+}, enyo.g11n.Char.isLetter = function(t) {
+var n, r, i, s;
+return !t || t.length < 1 ? !1 : (n = t.charAt(0), r = t.charCodeAt(0), i = enyo.g11n.Utils.getNonLocaleFile({
+root: enyo.g11n.Utils._getEnyoRoot(),
+path: "base/character_data/chartype.letter.json"
+}), s = i && n in i || enyo.g11n.Char._isIdeoLetter(r), enyo.g11n.Utils.releaseAllJsonFiles(), s);
+}, enyo.g11n.Char.getIndexChars = function(t) {
+var n, r, i, s, o = [];
+t ? typeof t == "string" ? r = new enyo.g11n.Locale(t) : r = t : r = enyo.g11n.currentLocale(), enyo.g11n.Char._resources || (enyo.g11n.Char._resources = {}), enyo.g11n.Char._resources[r.locale] || (enyo.g11n.Char._resources[r.locale] = new enyo.g11n.Resources({
+root: enyo.g11n.Utils._getEnyoRoot() + "/base",
+locale: r
+})), i = enyo.g11n.Char._resources[r.locale], n = enyo.g11n.Char._resources[r.locale].$L({
+key: "indexChars",
+value: "ABCDEFGHIJKLMNOPQRSTUVWXYZ#"
+});
+for (s = 0; s < n.length; s++) o.push(n[s]);
+return o;
+}, enyo.g11n.Char.getBaseString = function(t, n) {
+var r, i;
+if (!t) return undefined;
+n ? typeof n == "string" ? i = new enyo.g11n.Locale(n) : i = n : i = enyo.g11n.currentLocale(), r = enyo.g11n.Utils.getJsonFile({
+root: enyo.g11n.Utils._getEnyoRoot(),
+path: "base/character_data",
+locale: i
+});
+if (!r || enyo.g11n.Char._objectIsEmpty(r)) r = enyo.g11n.Utils.getJsonFile({
+root: enyo.g11n.Utils._getEnyoRoot(),
+path: "base/character_data",
+locale: new enyo.g11n.Locale("en")
+});
+return r && r.baseChars !== undefined && (t = enyo.g11n.Char._strTrans(t, r.baseChars)), enyo.g11n.Utils.releaseAllJsonFiles(), t;
+};
+
+// javascript/timezone.js
+
+enyo.g11n._TZ = enyo.g11n._TZ || {}, enyo.g11n.TzFmt = function(e) {
+return this.setTZ(), e !== undefined && e.TZ !== undefined && this.setCurrentTimeZone(e.TZ), enyo.g11n.Utils.releaseAllJsonFiles(), this;
+}, enyo.g11n.TzFmt.prototype = {
+toString: function() {
+return this.TZ !== undefined ? this.TZ : this._TZ;
+},
+setTZ: function() {
+var e = (new Date).toString(), t = enyo.indexOf("(", e), n = enyo.indexOf(")", e), r = e.slice(t + 1, n);
+r !== undefined ? this.setCurrentTimeZone(r) : this.setDefaultTimeZone();
+},
+getCurrentTimeZone: function() {
+return this.TZ !== undefined ? this.TZ : this._TZ !== undefined ? this._TZ : "unknown";
+},
+setCurrentTimeZone: function(e) {
+this._TZ = e, this.TZ = e;
+},
+setDefaultTimeZone: function() {
+var e = (new Date).toString().match(/\(([A-Z]+)\)/);
+this._TZ = e && e[1] || "PST";
+}
+};
+
+// javascript/datetime.js
+
+enyo.g11n.DateFmt = function(e) {
+var t, n, r, i, s;
+s = this, s._normalizedComponents = {
+date: {
+dm: "DM",
+md: "DM",
+my: "MY",
+ym: "MY",
+d: "D",
+dmy: "",
+dym: "",
+mdy: "",
+myd: "",
+ydm: "",
+ymd: ""
+},
+time: {
+az: "AZ",
+za: "AZ",
+a: "A",
+z: "Z",
+"": ""
+},
+timeLength: {
+"short": "small",
+medium: "small",
+"long": "big",
+full: "big"
+}
+}, s._normalizeDateTimeFormatComponents = function(e) {
+var t = e.dateComponents, n = e.timeComponents, r, i, o, u = e.time;
+return e.date && t && (r = s._normalizedComponents.date[t], r === undefined && (enyo.log("date component error: '" + t + "'"), r = "")), u && n !== undefined && (o = s._normalizedComponents.timeLength[u], o === undefined && (enyo.log("time format error: " + u), o = "small"), i = s._normalizedComponents.time[n], i === undefined && enyo.log("time component error: '" + n + "'")), e.dateComponents = r, e.timeComponents = i, e;
+}, s._finalDateTimeFormat = function(e, t, n) {
+var r = s.dateTimeFormatHash.dateTimeFormat || s.defaultFormats.dateTimeFormat;
+return e && t ? s._buildDateTimeFormat(r, "dateTime", {
+TIME: t,
+DATE: e
+}) : t || e || "M/d/yy h:mm a";
+}, s._buildDateTimeFormat = function(e, t, n) {
+var r, i, o = [], u = s._getTokenizedFormat(e, t), a;
+for (r = 0, i = u.length; r < i && u[r] !== undefined; ++r) a = n[u[r]], a ? o.push(a) : o.push(u[r]);
+return o.join("");
+}, s._getDateFormat = function(e, t) {
+var n = s._formatFetch(e, t.dateComponents, "Date");
+if (e !== "full" && t.weekday) {
+var r = s._formatFetch(t.weekday === !0 ? e : t.weekday, "", "Weekday");
+n = s._buildDateTimeFormat(s.dateTimeFormatHash.weekDateFormat || s.defaultFormats.weekDateFormat, "weekDate", {
+WEEK: r,
+DATE: n
+});
+}
+return n;
+}, s._getTimeFormat = function(e, t) {
+var n = s._formatFetch(e, "", s.twelveHourFormat ? "Time12" : "Time24");
+if (t.timeComponents) {
+var r = "time" + t.timeComponents, i = r + "Format";
+return s._buildDateTimeFormat(s.dateTimeFormatHash[i] || s.defaultFormats[i], r, {
+TIME: n,
+AM: "a",
+ZONE: "zzz"
+});
+}
+return n;
+}, s.ParserChunks = {
+full: "('[^']+'|y{2,4}|M{1,4}|d{1,2}|z{1,3}|a|h{1,2}|H{1,2}|k{1,2}|K{1,2}|E{1,4}|m{1,2}|s{1,2}|[^A-Za-z']+)?",
+dateTime: "(DATE|TIME|[^A-Za-z]+|'[^']+')?",
+weekDate: "(DATE|WEEK|[^A-Za-z]+|'[^']+')?",
+timeA: "(TIME|AM|[^A-Za-z]+|'[^']+')?",
+timeZ: "(TIME|ZONE|[^A-Za-z]+|'[^']+')?",
+timeAZ: "(TIME|AM|ZONE|[^A-Za-z]+|'[^']+')?"
+}, s._getTokenizedFormat = function(e, t) {
+var n = t && s.ParserChunks[t] || s.ParserChunks.full, r = e.length, i = [], o, u, a = new RegExp(n, "g");
+while (r > 0) {
+o = a.exec(e)[0], u = o.length;
+if (u === 0) return [];
+i.push(o), r -= u;
+}
+return i;
+}, s._formatFetch = function(e, t, n, r) {
+switch (e) {
+case "short":
+case "medium":
+case "long":
+case "full":
+case "small":
+case "big":
+case "default":
+return s.dateTimeFormatHash[e + (t || "") + n];
+default:
+return e;
+}
+}, s._dayOffset = function(e, t) {
+var n;
+return t = s._roundToMidnight(t), e = s._roundToMidnight(e), n = (e.getTime() - t.getTime()) / 864e5, n;
+}, s._roundToMidnight = function(e) {
+var t = e.getTime(), n = new Date;
+return n.setTime(t), n.setHours(0), n.setMinutes(0), n.setSeconds(0), n.setMilliseconds(0), n;
+}, s.inputParams = e, typeof e == "undefined" || !e.locale ? t = enyo.g11n.formatLocale() : typeof e.locale == "string" ? t = new enyo.g11n.Locale(e.locale) : t = e.locale, t.language || t.useDefaultLang(), this.locale = t, typeof e == "string" ? s.formatType = e : typeof e == "undefined" ? (e = {
+format: "short"
+}, s.formatType = e.format) : s.formatType = e.format, !s.formatType && !e.time && !e.date && (e ? e.format = "short" : e = {
+format: "short"
+}, s.formatType = "short"), s.dateTimeHash = enyo.g11n.Utils.getJsonFile({
+root: enyo.g11n.Utils._getEnyoRoot(),
+path: "base/datetime_data",
+locale: t,
+type: "language"
+}), s.dateTimeHash || (s.dateTimeHash = enyo.g11n.Utils.getJsonFile({
+root: enyo.g11n.Utils._getEnyoRoot(),
+path: "base/datetime_data",
+locale: new enyo.g11n.Locale("en_us")
+})), s.dateTimeFormatHash = enyo.g11n.Utils.getJsonFile({
+root: enyo.g11n.Utils._getEnyoRoot(),
+path: "base/formats",
+locale: t,
+type: "region"
+}), s.dateTimeFormatHash || (s.dateTimeFormatHash = enyo.g11n.Utils.getJsonFile({
+root: enyo.g11n.Utils._getEnyoRoot(),
+path: "base/formats",
+locale: new enyo.g11n.Locale("en_us"),
+type: "region"
+})), s.rb = new enyo.g11n.Resources({
+root: enyo.g11n.Utils._getEnyoRoot() + "/base",
+locale: t
+}), typeof e == "undefined" || typeof e.twelveHourFormat == "undefined" ? s.twelveHourFormat = s.dateTimeFormatHash.is12HourDefault : s.twelveHourFormat = e.twelveHourFormat;
+if (s.formatType) switch (s.formatType) {
+case "short":
+case "medium":
+case "long":
+case "full":
+case "default":
+s.partsLength = s.formatType, i = s._finalDateTimeFormat(s._getDateFormat(s.formatType, e), s._getTimeFormat(s.formatType, e), e);
+break;
+default:
+i = s.formatType;
+} else e = s._normalizeDateTimeFormatComponents(e), e.time && (r = s._getTimeFormat(e.time, e), s.partsLength = e.time), e.date && (n = s._getDateFormat(e.date, e), s.partsLength = e.date), i = s._finalDateTimeFormat(n, r, e);
+s.tokenized = s._getTokenizedFormat(i), s.partsLength || (s.partsLength = "full");
+}, enyo.g11n.DateFmt.prototype.toString = function() {
+return this.tokenized.join("");
+}, enyo.g11n.DateFmt.prototype.isAmPm = function() {
+return this.twelveHourFormat;
+}, enyo.g11n.DateFmt.prototype.isAmPmDefault = function() {
+return this.dateTimeFormatHash.is12HourDefault;
+}, enyo.g11n.DateFmt.prototype.getFirstDayOfWeek = function() {
+return this.dateTimeFormatHash.firstDayOfWeek;
+}, enyo.g11n.DateFmt.prototype._format = function(e, t) {
+var n = this, r, i = [], s, o, u, a, f, l, c, h;
+c = n.dateTimeHash;
+for (f = 0, l = t.length; f < l && t[f] !== undefined; f++) {
+switch (t[f]) {
+case "yy":
+s = "", i.push((e.getFullYear() + "").substring(2));
+break;
+case "yyyy":
+s = "", i.push(e.getFullYear());
+break;
+case "MMMM":
+s = "long", o = "month", u = e.getMonth();
+break;
+case "MMM":
+s = "medium", o = "month", u = e.getMonth();
+break;
+case "MM":
+s = "short", o = "month", u = e.getMonth();
+break;
+case "M":
+s = "single", o = "month", u = e.getMonth();
+break;
+case "dd":
+s = "short", o = "date", u = e.getDate() - 1;
+break;
+case "d":
+s = "single", o = "date", u = e.getDate() - 1;
+break;
+case "zzz":
+s = "", typeof n.timezoneFmt == "undefined" && (typeof n.inputParams == "undefined" || typeof n.inputParams.TZ == "undefined" ? n.timezoneFmt = new enyo.g11n.TzFmt : n.timezoneFmt = new enyo.g11n.TzFmt(n.inputParams)), a = n.timezoneFmt.getCurrentTimeZone(), i.push(a);
+break;
+case "a":
+s = "", e.getHours() > 11 ? i.push(c.pm) : i.push(c.am);
+break;
+case "K":
+s = "", i.push(e.getHours() % 12);
+break;
+case "KK":
+s = "", r = e.getHours() % 12, i.push(r < 10 ? "0" + ("" + r) : r);
+break;
+case "h":
+s = "", r = e.getHours() % 12, i.push(r === 0 ? 12 : r);
+break;
+case "hh":
+s = "", r = e.getHours() % 12, i.push(r === 0 ? 12 : r < 10 ? "0" + ("" + r) : r);
+break;
+case "H":
+s = "", i.push(e.getHours());
+break;
+case "HH":
+s = "", r = e.getHours(), i.push(r < 10 ? "0" + ("" + r) : r);
+break;
+case "k":
+s = "", r = e.getHours() % 12, i.push(r === 0 ? 12 : r);
+break;
+case "kk":
+s = "", r = e.getHours() % 12, i.push(r === 0 ? 12 : r < 10 ? "0" + ("" + r) : r);
+break;
+case "EEEE":
+s = "long", o = "day", u = e.getDay();
+break;
+case "EEE":
+s = "medium", o = "day", u = e.getDay();
+break;
+case "EE":
+s = "short", o = "day", u = e.getDay();
+break;
+case "E":
+s = "single", o = "day", u = e.getDay();
+break;
+case "mm":
+case "m":
+s = "";
+var p = e.getMinutes();
+i.push(p < 10 ? "0" + ("" + p) : p);
+break;
+case "ss":
+case "s":
+s = "";
+var d = e.getSeconds();
+i.push(d < 10 ? "0" + ("" + d) : d);
+break;
+default:
+h = /'([A-Za-z]+)'/.exec(t[f]), s = "", h ? i.push(h[1]) : i.push(t[f]);
+}
+s && i.push(c[s][o][u]);
+}
+return i.join("");
+}, enyo.g11n.DateFmt.prototype.format = function(e) {
+var t = this;
+return typeof e != "object" || t.tokenized === null ? (enyo.warn("DateFmt.format: no date to format or no format loaded"), undefined) : this._format(e, t.tokenized);
+}, enyo.g11n.DateFmt.prototype.formatRelativeDate = function(e, t) {
+var n, r, i, s, o = this;
+if (typeof e != "object") return undefined;
+typeof t == "undefined" ? (r = !1, n = new Date) : (typeof t.referenceDate != "undefined" ? n = t.referenceDate : n = new Date, typeof t.verbosity != "undefined" ? r = t.verbosity : r = !1), s = o._dayOffset(n, e);
+switch (s) {
+case 0:
+return o.dateTimeHash.relative.today;
+case 1:
+return o.dateTimeHash.relative.yesterday;
+case -1:
+return o.dateTimeHash.relative.tomorrow;
+default:
+if (s < 7) return o.dateTimeHash.long.day[e.getDay()];
+if (s < 30) {
+if (r) {
+i = new enyo.g11n.Template(o.dateTimeHash.relative.thisMonth);
+var u = Math.floor(s / 7);
+return i.formatChoice(u, {
+num: u
+});
+}
+return o.format(e);
+}
+if (s < 365) {
+if (r) {
+i = new enyo.g11n.Template(o.dateTimeHash.relative.thisYear);
+var a = Math.floor(s / 30);
+return i.formatChoice(a, {
+num: a
+});
+}
+return o.format(e);
+}
+return o.format(e);
+}
+}, enyo.g11n.DateFmt.prototype.formatRange = function(e, t) {
+var n, r, i, s, o, u, a, f, l = this.partsLength || "medium", c = this.dateTimeHash, h = this.dateTimeFormatHash;
+return !e && !t ? "" : !e || !t ? this.format(e || t) : (t.getTime() < e.getTime() && (n = t, t = e, e = n), a = new Date(e.getTime()), a.setHours(0), a.setMinutes(0), a.setSeconds(0), a.setMilliseconds(0), f = new Date(t.getTime()), f.setHours(0), f.setMinutes(0), f.setSeconds(0), f.setMilliseconds(0), f.getTime() - a.getTime() === 864e5 ? (s = "shortTime" + (this.twelveHourFormat ? "12" : "24"), r = this._getTokenizedFormat(h[s]), s = l + "Date", i = this._getTokenizedFormat(h[s]), u = new enyo.g11n.Template(this.rb.$L({
+key: "dateRangeConsecutiveDays",
+value: "#{startDate} #{startTime} - #{endDate} #{endTime}"
+})), u.evaluate({
+startTime: this._format(e, r),
+endTime: this._format(t, r),
+startDate: this._format(e, i),
+endDate: this._format(t, i)
+})) : e.getYear() === t.getYear() ? (o = l === "short" || l === "single" ? (e.getFullYear() + "").substring(2) : e.getFullYear(), e.getMonth() === t.getMonth() ? e.getDate() === t.getDate() ? (s = "shortTime" + (this.twelveHourFormat ? "12" : "24"), r = this._getTokenizedFormat(h[s]), s = l + "Date", i = this._getTokenizedFormat(h[s]), u = new enyo.g11n.Template(this.rb.$L({
+key: "dateRangeWithinDay",
+value: "#{startTime}-#{endTime}, #{date}"
+})), u.evaluate({
+startTime: this._format(e, r),
+endTime: this._format(t, r),
+date: this._format(e, i)
+})) : (s = l + "DDate", i = this._getTokenizedFormat(h[s]), u = new enyo.g11n.Template(this.rb.$L({
+key: "dateRangeWithinMonth",
+value: "#{month} #{startDate}-#{endDate}, #{year}"
+})), u.evaluate({
+month: c[l].month[e.getMonth()],
+startDate: this._format(e, i),
+endDate: this._format(t, i),
+year: o
+})) : (l === "full" ? l = "long" : l === "single" && (l = "short"), s = l + "DMDate", i = this._getTokenizedFormat(h[s]), u = new enyo.g11n.Template(this.rb.$L({
+key: "dateRangeWithinYear",
+value: "#{start} - #{end}, #{year}"
+})), u.evaluate({
+start: this._format(e, i),
+end: this._format(t, i),
+year: o
+}))) : t.getYear() - e.getYear() < 2 ? (s = l + "Date", i = this._getTokenizedFormat(h[s]), u = new enyo.g11n.Template(this.rb.$L({
+key: "dateRangeWithinConsecutiveYears",
+value: "#{start} - #{end}"
+})), u.evaluate({
+start: this._format(e, i),
+end: this._format(t, i)
+})) : (l === "full" ? l = "long" : l === "single" && (l = "short"), s = l + "MYDate", i = this._getTokenizedFormat(h[s]), u = new enyo.g11n.Template(this.rb.$L({
+key: "dateRangeMultipleYears",
+value: "#{startMonthYear} - #{endMonthYear}"
+})), u.evaluate({
+startMonthYear: this._format(e, i),
+endMonthYear: this._format(t, i)
+})));
+};
+
+// javascript/numberfmt.js
+
+enyo.g11n.NumberFmt = function(e) {
+var t, n, r, i, s, o, u;
+typeof e == "number" ? this.fractionDigits = e : e && typeof e.fractionDigits == "number" && (this.fractionDigits = e.fractionDigits), !e || !e.locale ? this.locale = enyo.g11n.formatLocale() : typeof e.locale == "string" ? this.locale = new enyo.g11n.Locale(e.locale) : this.locale = e.locale, this.style = e && e.style || "number", t = enyo.g11n.Utils.getJsonFile({
+root: enyo.g11n.Utils._getEnyoRoot(),
+path: "base/formats",
+locale: this.locale,
+type: "region"
+}), this.style === "currency" && (r = e && e.currency || t && t.currency && t.currency.name, r ? (r = r.toUpperCase(), this.currencyStyle = e && e.currencyStyle === "iso" ? "iso" : "common", n = enyo.g11n.Utils.getNonLocaleFile({
+root: enyo.g11n.Utils._getEnyoRoot(),
+path: "base/number_data/iso4217.json"
+}), n ? (i = n[r], i || (s = new enyo.g11n.Locale(r), u = enyo.g11n.Utils.getJsonFile({
+root: enyo.g11n.Utils._getEnyoRoot(),
+path: "base/formats",
+locale: s,
+type: "region"
+}), u && (r = u.currency && u.currency.name, i = n[r])), i || (r = t && t.currency && t.currency.name, i = n[r]), i ? (this.sign = this.currencyStyle !== "iso" ? i.sign : r, this.fractionDigits = e && typeof e.fractionDigits == "number" ? e.fractionDigits : i.digits) : this.style = "number") : (r = t && t.currency && t.currency.name, this.sign = r)) : (r = t && t.currency && t.currency.name, this.sign = r), r ? (o = t && t.currency && t.currency[this.currencyStyle] || "#{sign} #{amt}", this.currencyTemplate = new enyo.g11n.Template(o)) : this.style = "number"), t ? (this.decimal = t.numberDecimal || ".", this.divider = t.numberDivider || ",", t.dividerIndex ? t.dividerIndex === 4 ? this.numberGroupRegex = /(\d+)(\d{4})/ : this.numberGroupRegex = /(\d+)(\d{3})/ : this.numberGroupRegex = /(\d+)(\d{3})/, this.percentageSpace = t.percentageSpace) : (this.decimal = ".", this.divider = ",", this.numberGroupRegex = /(\d+)(\d{3})/, this.percentageSpace = !1), this.numberGroupRegex.compile(this.numberGroupRegex), enyo.g11n.Utils.releaseAllJsonFiles();
+}, enyo.g11n.NumberFmt.prototype.format = function(e) {
+try {
+var t, n, r, i;
+typeof e == "string" && (e = parseFloat(e));
+if (isNaN(e)) return undefined;
+typeof this.fractionDigits != "undefined" ? t = e.toFixed(this.fractionDigits) : t = e.toString(), n = t.split("."), r = n[0];
+while (this.divider && this.numberGroupRegex.test(r)) r = r.replace(this.numberGroupRegex, "$1" + this.divider + "$2");
+return n[0] = r, i = n.join(this.decimal), this.style === "currency" && this.currencyTemplate ? i = this.currencyTemplate.evaluate({
+amt: i,
+sign: this.sign
+}) : this.style === "percent" && (i += this.percentageSpace ? " %" : "%"), i;
+} catch (s) {
+return enyo.log("formatNumber error : " + s), (e || "0") + "." + (this.fractionDigits || "");
+}
+};
+
+// javascript/duration.js
+
+enyo.g11n.DurationFmt = function(e) {
+typeof e == "undefined" ? (this.locale = enyo.g11n.formatLocale(), this.style = "short") : (e.locale ? typeof e.locale == "string" ? this.locale = new enyo.g11n.Locale(e.locale) : this.locale = e.locale : this.locale = enyo.g11n.formatLocale(), e.style ? (this.style = e.style, this.style !== "short" && this.style !== "medium" && this.style !== "long" && this.style !== "full" && (this.style = "short")) : this.style = "short"), this.rb = new enyo.g11n.Resources({
+root: enyo.g11n.Utils._getEnyoRoot() + "/base",
+locale: this.locale
+}), this.style === "short" ? this.parts = {
+years: new enyo.g11n.Template(this.rb.$L({
+key: "yearsFormatShort",
+value: "##{num}y"
+})),
+months: new enyo.g11n.Template(this.rb.$L({
+key: "monthsFormatShort",
+value: "##{num}m"
+})),
+weeks: new enyo.g11n.Template(this.rb.$L({
+key: "weeksFormatShort",
+value: "##{num}w"
+})),
+days: new enyo.g11n.Template(this.rb.$L({
+key: "daysFormatShort",
+value: "##{num}d"
+})),
+hours: new enyo.g11n.Template(this.rb.$L({
+key: "hoursFormatShort",
+value: "##{num}"
+})),
+minutes: new enyo.g11n.Template(this.rb.$L({
+key: "minutesFormatShort",
+value: "##{num}"
+})),
+seconds: new enyo.g11n.Template(this.rb.$L({
+key: "secondsFormatShort",
+value: "##{num}"
+})),
+separator: this.rb.$L({
+key: "separatorShort",
+value: " "
+}),
+dateTimeSeparator: this.rb.$L({
+key: "dateTimeSeparatorShort",
+value: " "
+}),
+longTimeFormat: new enyo.g11n.Template(this.rb.$L({
+key: "longTimeFormatShort",
+value: "#{hours}:#{minutes}:#{seconds}"
+})),
+shortTimeFormat: new enyo.g11n.Template(this.rb.$L({
+key: "shortTimeFormatShort",
+value: "#{minutes}:#{seconds}"
+})),
+finalSeparator: ""
+} : this.style === "medium" ? this.parts = {
+years: new enyo.g11n.Template(this.rb.$L({
+key: "yearsFormatMedium",
+value: "##{num} yr"
+})),
+months: new enyo.g11n.Template(this.rb.$L({
+key: "monthsFormatMedium",
+value: "##{num} mo"
+})),
+weeks: new enyo.g11n.Template(this.rb.$L({
+key: "weeksFormatMedium",
+value: "##{num} wk"
+})),
+days: new enyo.g11n.Template(this.rb.$L({
+key: "daysFormatMedium",
+value: "##{num} dy"
+})),
+hours: new enyo.g11n.Template(this.rb.$L({
+key: "hoursFormatMedium",
+value: "##{num}"
+})),
+minutes: new enyo.g11n.Template(this.rb.$L({
+key: "minutesFormatMedium",
+value: "##{num}"
+})),
+seconds: new enyo.g11n.Template(this.rb.$L({
+key: "secondsFormatMedium",
+value: "##{num}"
+})),
+separator: this.rb.$L({
+key: "separatorMedium",
+value: " "
+}),
+dateTimeSeparator: this.rb.$L({
+key: "dateTimeSeparatorMedium",
+value: " "
+}),
+longTimeFormat: new enyo.g11n.Template(this.rb.$L({
+key: "longTimeFormatMedium",
+value: "#{hours}:#{minutes}:#{seconds}"
+})),
+shortTimeFormat: new enyo.g11n.Template(this.rb.$L({
+key: "shortTimeFormatMedium",
+value: "#{minutes}:#{seconds}"
+})),
+finalSeparator: ""
+} : this.style === "long" ? this.parts = {
+years: new enyo.g11n.Template(this.rb.$L({
+key: "yearsFormatLong",
+value: "1#1 yr|1>##{num} yrs"
+})),
+months: new enyo.g11n.Template(this.rb.$L({
+key: "monthsFormatLong",
+value: "1#1 mon|1>##{num} mos"
+})),
+weeks: new enyo.g11n.Template(this.rb.$L({
+key: "weeksFormatLong",
+value: "1#1 wk|1>##{num} wks"
+})),
+days: new enyo.g11n.Template(this.rb.$L({
+key: "daysFormatLong",
+value: "1#1 day|1>##{num} dys"
+})),
+hours: new enyo.g11n.Template(this.rb.$L({
+key: "hoursFormatLong",
+value: "0#|1#1 hr|1>##{num} hrs"
+})),
+minutes: new enyo.g11n.Template(this.rb.$L({
+key: "minutesFormatLong",
+value: "0#|1#1 min|1>##{num} min"
+})),
+seconds: new enyo.g11n.Template(this.rb.$L({
+key: "secondsFormatLong",
+value: "0#|1#1 sec|1>##{num} sec"
+})),
+separator: this.rb.$L({
+key: "separatorLong",
+value: " "
+}),
+dateTimeSeparator: this.rb.$L({
+key: "dateTimeSeparatorLong",
+value: " "
+}),
+longTimeFormat: "",
+shortTimeFormat: "",
+finalSeparator: ""
+} : this.style === "full" && (this.parts = {
+years: new enyo.g11n.Template(this.rb.$L({
+key: "yearsFormatFull",
+value: "1#1 year|1>##{num} years"
+})),
+months: new enyo.g11n.Template(this.rb.$L({
+key: "monthsFormatFull",
+value: "1#1 month|1>##{num} months"
+})),
+weeks: new enyo.g11n.Template(this.rb.$L({
+key: "weeksFormatFull",
+value: "1#1 week|1>##{num} weeks"
+})),
+days: new enyo.g11n.Template(this.rb.$L({
+key: "daysFormatFull",
+value: "1#1 day|1>##{num} days"
+})),
+hours: new enyo.g11n.Template(this.rb.$L({
+key: "hoursFormatFull",
+value: "0#|1#1 hour|1>##{num} hours"
+})),
+minutes: new enyo.g11n.Template(this.rb.$L({
+key: "minutesFormatFull",
+value: "0#|1#1 minute|1>##{num} minutes"
+})),
+seconds: new enyo.g11n.Template(this.rb.$L({
+key: "secondsFormatFull",
+value: "0#|1#1 second|1>##{num} seconds"
+})),
+separator: this.rb.$L({
+key: "separatorFull",
+value: ", "
+}),
+dateTimeSeparator: this.rb.$L({
+key: "dateTimeSeparatorFull",
+value: ", "
+}),
+longTimeFormat: "",
+shortTimeFormat: "",
+finalSeparator: this.rb.$L({
+key: "finalSeparatorFull",
+value: " and "
+})
+}), this.dateParts = [ "years", "months", "weeks", "days" ], this.timeParts = [ "hours", "minutes", "seconds" ];
+}, enyo.g11n.DurationFmt.prototype.format = function(e) {
+var t = [], n = [], r, i, s, o;
+if (!e || enyo.g11n.Char._objectIsEmpty(e)) return "";
+for (i = 0; i < this.dateParts.length; i++) s = e[this.dateParts[i]] || 0, s > 0 && (o = this.parts[this.dateParts[i]].formatChoice(s, {
+num: s
+}), o && o.length > 0 && (t.length > 0 && t.push(this.parts.separator), t.push(o)));
+if (this.style === "long" || this.style === "full") for (i = 0; i < this.timeParts.length; i++) s = e[this.timeParts[i]] || 0, s > 0 && (o = this.parts[this.timeParts[i]].formatChoice(s, {
+num: s
+}), o && o.length > 0 && (n.length > 0 && n.push(this.parts.separator), n.push(o))); else {
+var u = {}, a = e.hours ? this.parts.longTimeFormat : this.parts.shortTimeFormat;
+for (i = 0; i < this.timeParts.length; i++) {
+s = e[this.timeParts[i]] || 0;
+if (s < 10) switch (this.timeParts[i]) {
+case "minutes":
+e.hours && (s = "0" + s);
+break;
+case "seconds":
+s = "0" + s;
+break;
+case "hours":
+}
+o = this.parts[this.timeParts[i]].formatChoice(s, {
+num: s
+}), o && o.length > 0 && (u[this.timeParts[i]] = o);
+}
+n.push(a.evaluate(u));
+}
+r = t, r.length > 0 && n.length > 0 && r.push(this.parts.dateTimeSeparator);
+for (i = 0; i < n.length; i++) r.push(n[i]);
+return r.length > 2 && this.style === "full" && (r[r.length - 2] = this.parts.finalSeparator), r.join("") || "";
+};
+
 // PortsHeader.js
 
 enyo.kind({
@@ -5706,10 +6759,10 @@ components: [ {
 kind: "onyx.Toolbar",
 components: [ {
 kind: "onyx.Button",
-content: "Voltar",
+content: $L("Voltar"),
 ontap: "goHome"
 }, {
-content: "Endere\u00e7o Web"
+content: $L("Endere\u00e7o Web")
 } ]
 }, {
 tag: "div",
@@ -5719,7 +6772,7 @@ tag: "br"
 }, {
 kind: "onyx.TextArea",
 style: "width: 90%",
-placeholder: "sua url aqui",
+placeholder: $L("sua url aqui"),
 name: "url"
 }, {
 tag: "br"
@@ -5728,7 +6781,7 @@ tag: "br"
 }, {
 kind: "onyx.Button",
 style: "width: 90%",
-content: "Abrir URL",
+content: $L("Abrir URL"),
 ontap: "viewURL"
 }, {
 tag: "br"
@@ -5737,7 +6790,7 @@ tag: "br"
 }, {
 kind: "onyx.Button",
 style: "width: 90%",
-content: "Compartilhar URL",
+content: $L("Compartilhar URL"),
 ontap: "shareURL"
 }, {
 tag: "br"
@@ -5746,7 +6799,7 @@ tag: "br"
 }, {
 kind: "onyx.Button",
 style: "width: 90%",
-content: "Adicionar URL aos favoritos",
+content: $L("Adicionar URL aos favoritos"),
 ontap: "AddBookmark"
 }, {
 tag: "br"
@@ -5756,7 +6809,7 @@ tag: "br"
 kind: "onyx.Button",
 name: "facebookButton",
 style: "width: 90%",
-content: "Compartilhar no Facebook",
+content: $L("Compartilhar no Facebook"),
 ontap: "shareFacebook"
 } ]
 } ],
@@ -5791,7 +6844,7 @@ FB.ui({
 method: "feed",
 link: e
 }, function(e) {
-e && e.post_id ? alert("Compartilhado com sucesso!") : alert("N\u00e3o foi poss\u00edvel compartilhar.");
+e && e.post_id ? alert($L("Compartilhado com sucesso!")) : alert($L("N\u00e3o foi poss\u00edvel compartilhar."));
 });
 }
 });
@@ -5815,10 +6868,10 @@ components: [ {
 kind: "onyx.Toolbar",
 components: [ {
 kind: "onyx.Button",
-content: "Voltar",
+content: $L("Voltar"),
 ontap: "goHome"
 }, {
-content: "Endere\u00e7o de Email"
+content: $L("Endere\u00e7o de Email")
 } ]
 }, {
 tag: "div",
@@ -5828,7 +6881,7 @@ tag: "br"
 }, {
 kind: "onyx.TextArea",
 style: "width: 90%",
-placeholder: "your email here",
+placeholder: $L("seu email aqui"),
 name: "url"
 }, {
 tag: "br"
@@ -5837,7 +6890,7 @@ tag: "br"
 }, {
 kind: "onyx.Button",
 style: "width: 90%",
-content: "Enviar Email",
+content: $L("Enviar Email"),
 ontap: "sendMail"
 }, {
 tag: "br"
@@ -5846,7 +6899,7 @@ tag: "br"
 }, {
 kind: "onyx.Button",
 style: "width: 90%",
-content: "Compartilhar Email",
+content: $L("Compartilhar Email"),
 ontap: "shareURL"
 }, {
 tag: "br"
@@ -5855,7 +6908,7 @@ tag: "br"
 }, {
 kind: "onyx.Button",
 style: "width: 90%",
-content: "Adicionar Contato",
+content: $L("Adicionar Contato"),
 ontap: "AddContact"
 } ]
 } ],
@@ -5897,7 +6950,7 @@ onPanelChanged: ""
 components: [ {
 kind: "PortsHeader",
 title: "QR Decoder",
-taglines: [ "Quadradinhos por todos os lados!", "The Power To Decode!", "Cade o QR Code?" ]
+taglines: [ $L("Quadradinhos por todos os lados!"), $L("The Power To Decode!"), $L("Cade o QR Code?"), $L("Olha A Pizza!!!") ]
 }, {
 kind: "webActivities.PickActivity",
 name: "picker",
@@ -5909,11 +6962,10 @@ tag: "div",
 fit: !0,
 style: "text-align:center",
 components: [ {
-name: "scan",
-content: "Toque Para Escanear"
+name: "scan"
 }, {
 kind: "enyo.Image",
-src: "assets/touchbutton.png",
+src: $L("assets/touchbutton.png"),
 ontap: "scanqrcode",
 style: "width: 80%; height: auto"
 } ]
@@ -5926,7 +6978,7 @@ content: "Toque para instalar",
 ontap: "installApp"
 } ],
 create: function() {
-this.inherited(arguments), this.log("Platform is: " + enyo.platform.firefoxOS), this.log("Checking if QR Decoder is installed..."), enyo.WebAppInstaller.check(enyo.bind(this, function(e) {
+this.inherited(arguments), this.log("Platform is: " + enyo.platform.firefoxOS), this.log("Current Locale is: " + enyo.g11n.currentLocale()), this.log("Checking if QR Decoder is installed..."), enyo.WebAppInstaller.check(enyo.bind(this, function(e) {
 e && e.type == "mozilla" && e.installed ? (this.log("App is installed!"), this.$.installButton.destroy()) : this.log("App is not installed!");
 }));
 },
@@ -5937,7 +6989,7 @@ scanqrcode: function(e, t) {
 this.log(e.name), this.$.picker.pick();
 },
 picksuccess: function(e) {
-this.log("pick success callback!"), this.$.scan.setContent("Processando... (pode demorar um pouco)"), this.$.scan.render(), qrcode.callback = enyo.bind(this, function(e) {
+this.log("pick success callback!"), this.$.scan.setContent($L("Processando... (pode demorar um pouco)")), this.$.scan.render(), qrcode.callback = enyo.bind(this, function(e) {
 this.processQRData(e);
 }), this.imageBlob = e.blob, this.retried = !1, qrcode.decode(window.URL.createObjectURL(this.imageBlob));
 },
@@ -5945,8 +6997,8 @@ pickerror: function(e) {
 this.log("pick error callback!"), console.log(e);
 },
 processQRData: function(e) {
-this.log("QR Code: " + e), this.$.scan.setContent("Toque Para Escanear"), this.$.scan.render();
-if (e.indexOf("error decoding") != -1) return alert("N\u00e3o foi poss\u00edvel decodificar o QR code."), !0;
+this.log("QR Code: " + e), this.$.scan.setContent(""), this.$.scan.render();
+if (e.indexOf("error decoding") != -1) return alert($L("N\u00e3o foi poss\u00edvel decodificar o QR code.")), !0;
 if (e.indexOf("http://") != -1 || e.indexOf("https://") != -1) return this.doPanelChanged({
 panel: "url",
 url: e
@@ -6002,10 +7054,10 @@ components: [ {
 kind: "onyx.Toolbar",
 components: [ {
 kind: "onyx.Button",
-content: "Voltar",
+content: $L("Voltar"),
 ontap: "goHome"
 }, {
-content: "N\u00famero de Telefone"
+content: $L("Numero de Telefone")
 } ]
 }, {
 tag: "div",
@@ -6015,7 +7067,7 @@ tag: "br"
 }, {
 kind: "onyx.TextArea",
 style: "width: 90%",
-placeholder: "seu n\u00famero aqui",
+placeholder: $L("seu n\u00famero aqui"),
 name: "url"
 }, {
 tag: "br"
@@ -6024,7 +7076,7 @@ tag: "br"
 }, {
 kind: "onyx.Button",
 style: "width: 90%",
-content: "Discar",
+content: $L("Discar"),
 ontap: "dial"
 }, {
 tag: "br"
@@ -6033,7 +7085,7 @@ tag: "br"
 }, {
 kind: "onyx.Button",
 style: "width: 90%",
-content: "Enviar SMS",
+content: $L("Enviar SMS"),
 ontap: "sendSMS"
 }, {
 tag: "br"
@@ -6042,7 +7094,7 @@ tag: "br"
 }, {
 kind: "onyx.Button",
 style: "width: 90%",
-content: "Adicionar Contato",
+content: $L("Adicionar Contato"),
 ontap: "AddContact"
 } ]
 } ],
