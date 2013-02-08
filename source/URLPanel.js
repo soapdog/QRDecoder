@@ -17,25 +17,25 @@ enyo.kind({
     },
    components: [
        {kind: "onyx.Toolbar", components: [
-           {kind: "onyx.Button", content: "Voltar", ontap: "goHome"},
-           {content: "Endereço Web"}
+           {kind: "onyx.Button", content: $L("Voltar"), ontap: "goHome"},
+           {content: $L("Endereço Web")}
 
        ]},
        {tag: "div", style: "text-align: center", components: [
            {tag: "br"},
-            {kind: "onyx.TextArea", style: "width: 90%", placeholder: "sua url aqui", name: "url"},
+            {kind: "onyx.TextArea", style: "width: 90%", placeholder: $L("sua url aqui"), name: "url"},
            {tag: "br"},
            {tag: "br"},
-           {kind: "onyx.Button", style: "width: 90%",content:"Abrir URL", ontap: "viewURL"},
+           {kind: "onyx.Button", style: "width: 90%",content:$L("Abrir URL"), ontap: "viewURL"},
            {tag: "br"},
            {tag: "br"},
-           {kind: "onyx.Button", style: "width: 90%", content:"Compartilhar URL", ontap: "shareURL"},
+           {kind: "onyx.Button", style: "width: 90%", content:$L("Compartilhar URL"), ontap: "shareURL"},
            {tag: "br"},
            {tag: "br"},
-           {kind: "onyx.Button", style: "width: 90%", content:"Adicionar URL aos favoritos", ontap: "AddBookmark"},
+           {kind: "onyx.Button", style: "width: 90%", content:$L("Adicionar URL aos favoritos"), ontap: "AddBookmark"},
            {tag: "br"},
            {tag: "br"},
-           {kind: "onyx.Button", name: "facebookButton", style: "width: 90%", content:"Compartilhar no Facebook", ontap: "shareFacebook"}
+           {kind: "onyx.Button", name: "facebookButton", style: "width: 90%", content:$L("Compartilhar no Facebook"), ontap: "shareFacebook"}
        ]}
    ],
     urlChanged: function() {
@@ -66,9 +66,9 @@ enyo.kind({
             },
             function(response) {
                 if (response && response.post_id) {
-                    alert('Compartilhado com sucesso!');
+                    alert($L('Compartilhado com sucesso!'));
                 } else {
-                    alert('Não foi possível compartilhar.');
+                    alert($L('Não foi possível compartilhar.'));
                 }
             }
         );

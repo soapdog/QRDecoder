@@ -1,12 +1,12 @@
 {
-  "version": "0.1",
+  "version": "0.2",
   "name": "QR Decoder",
   "description": "Um decodificador para QR codes",
-  "launch_path": "/apps/QRDecoder/",
+  "launch_path": "/",
   "icons": {
-    "30": "/apps/QRDecoder/assets/icons/logo-30.png",
-    "60": "/apps/QRDecoder/assets/icons/logo-60.png",
-    "128": "/apps/QRDecoder/assets/icons/logo-128.png"
+    "30": "/assets/icons/logo-30.png",
+    "60": "/assets/icons/logo-60.png",
+    "128": "/assets/icons/logo-128.png"
   },
   "developer": {
     "name": "andre@andregarzia.com",

@@ -10,9 +10,10 @@ enyo.kind({
             title: "QR Decoder",
             //style: "background-color: #ff4e00;",
             taglines: [
-                "Quadradinhos por todos os lados!",
-                "The Power To Decode!",
-                "Cade o QR Code?"
+                $L("Quadradinhos por todos os lados!"),
+                $L("The Power To Decode!"),
+                $L("Cade o QR Code?"),
+                $L("Olha A Pizza!!!")
             ]
         },
         {
@@ -23,8 +24,8 @@ enyo.kind({
             type:["image/png", "image/jpg", "image/jpeg"]
         },
         {tag: "div", fit: true,  style: "text-align:center", components: [
-            {name: "scan", content: "Toque Para Escanear"},
-            {kind: "enyo.Image", src: "assets/touchbutton.png",  ontap: "scanqrcode", style: "width: 80%; height: auto"}
+            {name: "scan"},
+            {kind: "enyo.Image", src: $L("assets/touchbutton.png"),  ontap: "scanqrcode", style: "width: 80%; height: auto"}
         ]},
         {kind: "onyx.Button", classes: "onyx-dark", name: "installButton", style: "height: 70px; width: 100%", content: "Toque para instalar", ontap: "installApp"}
 
@@ -55,7 +56,7 @@ enyo.kind({
     picksuccess: function(inResult) {
         this.log("pick success callback!");
 
-        this.$.scan.setContent("Processando... (pode demorar um pouco)");
+        this.$.scan.setContent($L("Processando... (pode demorar um pouco)"));
         this.$.scan.render();
         qrcode.callback = enyo.bind(this, function(data) {
            this.processQRData(data);
@@ -71,13 +72,13 @@ enyo.kind({
     },
     processQRData: function(inData) {
         this.log("QR Code: " + inData);
-        this.$.scan.setContent("Toque Para Escanear");
+        this.$.scan.setContent("");
         this.$.scan.render();
 
         // Check for error!
         if (inData.indexOf("error decoding") != -1) {
             // Sharpen image...
-            alert("Não foi possível decodificar o QR code.");
+            alert($L("Não foi possível decodificar o QR code."));
             return true;
         }
 

@@ -14,22 +14,22 @@ enyo.kind({
     },
     components: [
         {kind: "onyx.Toolbar", components: [
-            {kind: "onyx.Button", content: "Voltar", ontap: "goHome"},
-            {content: "Número de Telefone"}
+            {kind: "onyx.Button", content: $L("Voltar"), ontap: "goHome"},
+            {content: $L("Numero de Telefone")}
 
         ]},
         {tag: "div", style: "text-align: center", components: [
             {tag: "br"},
-            {kind: "onyx.TextArea", style: "width: 90%", placeholder: "seu número aqui", name: "url"},
+            {kind: "onyx.TextArea", style: "width: 90%", placeholder: $L("seu número aqui"), name: "url"},
             {tag: "br"},
             {tag: "br"},
-            {kind: "onyx.Button", style: "width: 90%",content:"Discar", ontap: "dial"},
+            {kind: "onyx.Button", style: "width: 90%",content:$L("Discar"), ontap: "dial"},
             {tag: "br"},
             {tag: "br"},
-            {kind: "onyx.Button", style: "width: 90%", content:"Enviar SMS", ontap: "sendSMS"},
+            {kind: "onyx.Button", style: "width: 90%", content:$L("Enviar SMS"), ontap: "sendSMS"},
             {tag: "br"},
             {tag: "br"},
-            {kind: "onyx.Button", style: "width: 90%", content:"Adicionar Contato", ontap: "AddContact"}
+            {kind: "onyx.Button", style: "width: 90%", content:$L("Adicionar Contato"), ontap: "AddContact"}
         ]}
     ],
     urlChanged: function() {
