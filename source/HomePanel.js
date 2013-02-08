@@ -34,6 +34,7 @@ enyo.kind({
     create: function() {
         this.inherited(arguments);
         this.log("Platform is: " + enyo.platform.firefoxOS);
+        this.log("Current Locale is: " + enyo.g11n.currentLocale());
         this.log("Checking if QR Decoder is installed...");
         if (enyo.WebAppInstaller.check(enyo.bind(this, function(response){
             if (response && response.type == "mozilla" && response.installed) {
