@@ -10,10 +10,9 @@ enyo.kind({
             title: "QR Decoder",
             //style: "background-color: #ff4e00;",
             taglines: [
-                $L("Quadradinhos por todos os lados!"),
+                $L("Look! Pizza!"),
                 $L("The Power To Decode!"),
-                $L("Cade o QR Code?"),
-                $L("Olha A Pizza!!!")
+                $L("Where is the QR Code?")
             ]
         },
         {
@@ -25,16 +24,15 @@ enyo.kind({
         },
         {tag: "div", fit: true,  style: "text-align:center", components: [
             {name: "scan"},
-            {kind: "enyo.Image", src: $L("assets/touchbutton.png"),  ontap: "scanqrcode", style: "width: 80%; height: auto"}
+            {kind: "enyo.Image", src: $L("assets/touchbutton_en.png"),  ontap: "scanqrcode", style: "width: 80%; height: auto"}
         ]},
-        {kind: "onyx.Button", classes: "onyx-dark", name: "installButton", style: "height: 70px; width: 100%", content: "Toque para instalar", ontap: "installApp"}
+        {kind: "onyx.Button", classes: "onyx-dark", name: "installButton", style: "height: 70px; width: 100%", content: $L("Click to Install"), ontap: "installApp"}
 
 
     ],
     create: function() {
         this.inherited(arguments);
         this.log("Platform is: " + enyo.platform.firefoxOS);
-        this.log("Current Locale is: " + enyo.g11n.currentLocale());
         this.log("Checking if QR Decoder is installed...");
         if (enyo.WebAppInstaller.check(enyo.bind(this, function(response){
             if (response && response.type == "mozilla" && response.installed) {
@@ -57,7 +55,7 @@ enyo.kind({
     picksuccess: function(inResult) {
         this.log("pick success callback!");
 
-        this.$.scan.setContent($L("Processando... (pode demorar um pouco)"));
+        this.$.scan.setContent($L("Processing... (may take a while)"));
         this.$.scan.render();
         qrcode.callback = enyo.bind(this, function(data) {
            this.processQRData(data);
@@ -79,7 +77,7 @@ enyo.kind({
         // Check for error!
         if (inData.indexOf("error decoding") != -1) {
             // Sharpen image...
-            alert($L("Não foi possível decodificar o QR code."));
+            alert($L("Could not decode the QR code."));
             return true;
         }
 

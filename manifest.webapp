@@ -1,7 +1,7 @@
 {
   "version": "0.2",
   "name": "QR Decoder",
-  "description": "Easy app to decode QR codes",
+  "description": "Um aplicativo para decodificar QR Codes",
   "launch_path": "/",
   "icons": {
     "30": "/assets/icons/logo-30.png",
@@ -13,10 +13,10 @@
     "url": "http://andregarzia.com"
   },
   "installs_allowed_from": ["*"],
-  "default_locale": "en",
+  "default_locale": "pt",
   "locales": {
-    "pt": {
-        "description": "Um aplicativo para decodificar QR codes"
+    "en": {
+        "description": "Easy app to decode QR codes"
     }
   }
 }

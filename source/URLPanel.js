@@ -17,25 +17,25 @@ enyo.kind({
     },
    components: [
        {kind: "onyx.Toolbar", components: [
-           {kind: "onyx.Button", content: $L("Voltar"), ontap: "goHome"},
-           {content: $L("Endereço Web")}
+           {kind: "onyx.Button", content: $L("Back"), ontap: "goHome"},
+           {content: $L("Web Address")}
 
        ]},
        {tag: "div", style: "text-align: center", components: [
            {tag: "br"},
-            {kind: "onyx.TextArea", style: "width: 90%", placeholder: $L("sua url aqui"), name: "url"},
+            {kind: "onyx.TextArea", style: "width: 90%", placeholder: $L("your url here"), name: "url"},
            {tag: "br"},
            {tag: "br"},
-           {kind: "onyx.Button", style: "width: 90%",content:$L("Abrir URL"), ontap: "viewURL"},
+           {kind: "onyx.Button", style: "width: 90%",content:$L("View URL"), ontap: "viewURL"},
            {tag: "br"},
            {tag: "br"},
-           {kind: "onyx.Button", style: "width: 90%", content:$L("Compartilhar URL"), ontap: "shareURL"},
+           {kind: "onyx.Button", style: "width: 90%", content:$L("Share URL"), ontap: "shareURL"},
            {tag: "br"},
            {tag: "br"},
-           {kind: "onyx.Button", style: "width: 90%", content:$L("Adicionar URL aos favoritos"), ontap: "AddBookmark"},
+           {kind: "onyx.Button", style: "width: 90%", content:$L("Bookmark URL"), ontap: "AddBookmark"},
            {tag: "br"},
            {tag: "br"},
-           {kind: "onyx.Button", name: "facebookButton", style: "width: 90%", content:$L("Compartilhar no Facebook"), ontap: "shareFacebook"}
+           {kind: "onyx.Button", name: "facebookButton", style: "width: 90%", content:$L("Share on Facebook"), ontap: "shareFacebook"}
        ]}
    ],
     urlChanged: function() {
@@ -66,9 +66,9 @@ enyo.kind({
             },
             function(response) {
                 if (response && response.post_id) {
-                    alert($L('Compartilhado com sucesso!'));
+                    alert($L('Post Succeeded!'));
                 } else {
-                    alert($L('Não foi possível compartilhar.'));
+                    alert($L('Post Failed :-('));
                 }
             }
         );

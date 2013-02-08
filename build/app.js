@@ -6759,10 +6759,10 @@ components: [ {
 kind: "onyx.Toolbar",
 components: [ {
 kind: "onyx.Button",
-content: $L("Voltar"),
+content: $L("Back"),
 ontap: "goHome"
 }, {
-content: $L("Endere\u00e7o Web")
+content: $L("Web Address")
 } ]
 }, {
 tag: "div",
@@ -6772,7 +6772,7 @@ tag: "br"
 }, {
 kind: "onyx.TextArea",
 style: "width: 90%",
-placeholder: $L("sua url aqui"),
+placeholder: $L("your url here"),
 name: "url"
 }, {
 tag: "br"
@@ -6781,7 +6781,7 @@ tag: "br"
 }, {
 kind: "onyx.Button",
 style: "width: 90%",
-content: $L("Abrir URL"),
+content: $L("View URL"),
 ontap: "viewURL"
 }, {
 tag: "br"
@@ -6790,7 +6790,7 @@ tag: "br"
 }, {
 kind: "onyx.Button",
 style: "width: 90%",
-content: $L("Compartilhar URL"),
+content: $L("Share URL"),
 ontap: "shareURL"
 }, {
 tag: "br"
@@ -6799,7 +6799,7 @@ tag: "br"
 }, {
 kind: "onyx.Button",
 style: "width: 90%",
-content: $L("Adicionar URL aos favoritos"),
+content: $L("Bookmark URL"),
 ontap: "AddBookmark"
 }, {
 tag: "br"
@@ -6809,7 +6809,7 @@ tag: "br"
 kind: "onyx.Button",
 name: "facebookButton",
 style: "width: 90%",
-content: $L("Compartilhar no Facebook"),
+content: $L("Share on Facebook"),
 ontap: "shareFacebook"
 } ]
 } ],
@@ -6844,7 +6844,7 @@ FB.ui({
 method: "feed",
 link: e
 }, function(e) {
-e && e.post_id ? alert($L("Compartilhado com sucesso!")) : alert($L("N\u00e3o foi poss\u00edvel compartilhar."));
+e && e.post_id ? alert($L("Post Succeeded!")) : alert($L("Post Failed :-("));
 });
 }
 });
@@ -6868,10 +6868,10 @@ components: [ {
 kind: "onyx.Toolbar",
 components: [ {
 kind: "onyx.Button",
-content: $L("Voltar"),
+content: $L("Back"),
 ontap: "goHome"
 }, {
-content: $L("Endere\u00e7o de Email")
+content: $L("Email Address")
 } ]
 }, {
 tag: "div",
@@ -6881,7 +6881,7 @@ tag: "br"
 }, {
 kind: "onyx.TextArea",
 style: "width: 90%",
-placeholder: $L("seu email aqui"),
+placeholder: $L("Your email here"),
 name: "url"
 }, {
 tag: "br"
@@ -6890,7 +6890,7 @@ tag: "br"
 }, {
 kind: "onyx.Button",
 style: "width: 90%",
-content: $L("Enviar Email"),
+content: $L("Send Email"),
 ontap: "sendMail"
 }, {
 tag: "br"
@@ -6899,7 +6899,7 @@ tag: "br"
 }, {
 kind: "onyx.Button",
 style: "width: 90%",
-content: $L("Compartilhar Email"),
+content: $L("Share Email"),
 ontap: "shareURL"
 }, {
 tag: "br"
@@ -6908,7 +6908,7 @@ tag: "br"
 }, {
 kind: "onyx.Button",
 style: "width: 90%",
-content: $L("Adicionar Contato"),
+content: $L("Add Contact"),
 ontap: "AddContact"
 } ]
 } ],
@@ -6950,7 +6950,7 @@ onPanelChanged: ""
 components: [ {
 kind: "PortsHeader",
 title: "QR Decoder",
-taglines: [ $L("Quadradinhos por todos os lados!"), $L("The Power To Decode!"), $L("Cade o QR Code?"), $L("Olha A Pizza!!!") ]
+taglines: [ $L("Look! Pizza!"), $L("The Power To Decode!"), $L("Where is the QR Code?") ]
 }, {
 kind: "webActivities.PickActivity",
 name: "picker",
@@ -6965,7 +6965,7 @@ components: [ {
 name: "scan"
 }, {
 kind: "enyo.Image",
-src: $L("assets/touchbutton.png"),
+src: $L("assets/touchbutton_en.png"),
 ontap: "scanqrcode",
 style: "width: 80%; height: auto"
 } ]
@@ -6974,11 +6974,11 @@ kind: "onyx.Button",
 classes: "onyx-dark",
 name: "installButton",
 style: "height: 70px; width: 100%",
-content: "Toque para instalar",
+content: $L("Click to Install"),
 ontap: "installApp"
 } ],
 create: function() {
-this.inherited(arguments), this.log("Platform is: " + enyo.platform.firefoxOS), this.log("Current Locale is: " + enyo.g11n.currentLocale()), this.log("Checking if QR Decoder is installed..."), enyo.WebAppInstaller.check(enyo.bind(this, function(e) {
+this.inherited(arguments), this.log("Platform is: " + enyo.platform.firefoxOS), this.log("Checking if QR Decoder is installed..."), enyo.WebAppInstaller.check(enyo.bind(this, function(e) {
 e && e.type == "mozilla" && e.installed ? (this.log("App is installed!"), this.$.installButton.destroy()) : this.log("App is not installed!");
 }));
 },
@@ -6989,7 +6989,7 @@ scanqrcode: function(e, t) {
 this.log(e.name), this.$.picker.pick();
 },
 picksuccess: function(e) {
-this.log("pick success callback!"), this.$.scan.setContent($L("Processando... (pode demorar um pouco)")), this.$.scan.render(), qrcode.callback = enyo.bind(this, function(e) {
+this.log("pick success callback!"), this.$.scan.setContent($L("Processing... (may take a while)")), this.$.scan.render(), qrcode.callback = enyo.bind(this, function(e) {
 this.processQRData(e);
 }), this.imageBlob = e.blob, this.retried = !1, qrcode.decode(window.URL.createObjectURL(this.imageBlob));
 },
@@ -6998,7 +6998,7 @@ this.log("pick error callback!"), console.log(e);
 },
 processQRData: function(e) {
 this.log("QR Code: " + e), this.$.scan.setContent(""), this.$.scan.render();
-if (e.indexOf("error decoding") != -1) return alert($L("N\u00e3o foi poss\u00edvel decodificar o QR code.")), !0;
+if (e.indexOf("error decoding") != -1) return alert($L("Could not decode the QR code.")), !0;
 if (e.indexOf("http://") != -1 || e.indexOf("https://") != -1) return this.doPanelChanged({
 panel: "url",
 url: e
@@ -7054,10 +7054,10 @@ components: [ {
 kind: "onyx.Toolbar",
 components: [ {
 kind: "onyx.Button",
-content: $L("Voltar"),
+content: $L("Back"),
 ontap: "goHome"
 }, {
-content: $L("Numero de Telefone")
+content: $L("Phone Number")
 } ]
 }, {
 tag: "div",
@@ -7067,7 +7067,7 @@ tag: "br"
 }, {
 kind: "onyx.TextArea",
 style: "width: 90%",
-placeholder: $L("seu n\u00famero aqui"),
+placeholder: $L("your number here"),
 name: "url"
 }, {
 tag: "br"
@@ -7076,7 +7076,7 @@ tag: "br"
 }, {
 kind: "onyx.Button",
 style: "width: 90%",
-content: $L("Discar"),
+content: $L("Dial"),
 ontap: "dial"
 }, {
 tag: "br"
@@ -7085,7 +7085,7 @@ tag: "br"
 }, {
 kind: "onyx.Button",
 style: "width: 90%",
-content: $L("Enviar SMS"),
+content: $L("Send SMS"),
 ontap: "sendSMS"
 }, {
 tag: "br"
@@ -7094,7 +7094,7 @@ tag: "br"
 }, {
 kind: "onyx.Button",
 style: "width: 90%",
-content: $L("Adicionar Contato"),
+content: $L("Add Contact"),
 ontap: "AddContact"
 } ]
 } ],
@@ -7149,6 +7149,11 @@ name: "mail"
 kind: "DialPanel",
 name: "dial"
 } ],
+create: function() {
+this.inherited(arguments), this.log("Setting Locale to: " + enyo.g11n.currentLocale());
+var e;
+e = new enyo.g11n.Resources(enyo.g11n.currentLocale()), console.log(e), this.log("Testing locale 'Back' = " + $L("Back"));
+},
 panelChanged: function(e, t) {
 t.url && t.panel == "url" && (console.log("found url: " + t.url), this.$.url.setUrl(t.url)), t.url && t.panel == "mail" && (console.log("found mail: " + t.url), this.$.mail.setUrl(t.url)), t.url && t.panel == "dial" && (console.log("found number: " + t.url), this.$.dial.setUrl(t.url));
 var n = {

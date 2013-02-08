@@ -1,0 +1,29 @@
+{
+    "Back": "Voltar",
+    "Web Address": "Endereço Web",
+    "Phone Number": "Número de Telefone",
+    "Email Address": "Endereço de Email",
+    "assets/touchbutton_en.png": "assets/touchbutton.png",
+    "Look! Pizza!": "Olha A Pizza!",
+    "The Power To Decode!": "O Poder de Decodificar!",
+    "Where is the QR Code?": "Cade o Codigo?",
+    // Dial Panel
+    "your number here": "seu número aqui",
+    "Dial": "Discar",
+    "Send SMS": "Enviar SMS",
+    "Add Contact": "Adicionar Contato",
+    // Mailto Panel
+    "Your email here": "seu email aqui",
+    "Send Email": "Enviar Email",
+    "Share Email": "Compartilhar Email",
+    // URL Panel
+    "your url here": "sua url aqui",
+    "View URL": "Abrir URL",
+    "Share URL": "Compartilhar URL",
+    "Bookmark URL": "Adicionar Aos Favoritos",
+    "Share on Facebook": "Compartilhar no Facebook",
+    "Post Succeeded!": "Compartilhado com sucesso!",
+    "Post Failed :-(": "Não foi possível compartilhar :-(",
+    // Geral
+    "Click to Install": "Clique para Instalar"
+}

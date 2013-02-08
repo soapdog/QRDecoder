@@ -14,22 +14,22 @@ enyo.kind({
     },
     components: [
         {kind: "onyx.Toolbar", components: [
-            {kind: "onyx.Button", content: $L("Voltar"), ontap: "goHome"},
-            {content: $L("Endereço de Email")}
+            {kind: "onyx.Button", content: $L("Back"), ontap: "goHome"},
+            {content: $L("Email Address")}
 
         ]},
         {tag: "div", style: "text-align: center", components: [
             {tag: "br"},
-            {kind: "onyx.TextArea", style: "width: 90%", placeholder: $L("seu email aqui"), name: "url"},
+            {kind: "onyx.TextArea", style: "width: 90%", placeholder: $L("Your email here"), name: "url"},
             {tag: "br"},
             {tag: "br"},
-            {kind: "onyx.Button", style: "width: 90%",content:$L("Enviar Email"), ontap: "sendMail"},
+            {kind: "onyx.Button", style: "width: 90%",content:$L("Send Email"), ontap: "sendMail"},
             {tag: "br"},
             {tag: "br"},
-            {kind: "onyx.Button", style: "width: 90%", content:$L("Compartilhar Email"), ontap: "shareURL"},
+            {kind: "onyx.Button", style: "width: 90%", content:$L("Share Email"), ontap: "shareURL"},
             {tag: "br"},
             {tag: "br"},
-            {kind: "onyx.Button", style: "width: 90%", content:$L("Adicionar Contato"), ontap: "AddContact"}
+            {kind: "onyx.Button", style: "width: 90%", content:$L("Add Contact"), ontap: "AddContact"}
         ]}
     ],
     urlChanged: function() {

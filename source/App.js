@@ -14,6 +14,16 @@ enyo.kind({
         {kind: "DialPanel", name: "dial"}
 
     ],
+    create: function() {
+        this.inherited(arguments);
+        this.log("Setting Locale to: "+enyo.g11n.currentLocale());
+        var localizedResources;
+        localizedResources = new enyo.g11n.Resources(enyo.g11n.currentLocale());
+        console.log(localizedResources);
+        this.log("Testing locale 'Back' = " +$L("Back"));
+
+
+    },
     panelChanged: function(inSender, inEvent) {
         if (inEvent.url && inEvent.panel == "url") {
             console.log("found url: "+inEvent.url);
