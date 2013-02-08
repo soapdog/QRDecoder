@@ -1,5 +1,7 @@
 {
     "Back": "Voltar",
+    "Processing... (may take a while)": "Processando... (pode demorar um pouco)",
+    "Could not decode the QR code.": "Não foi possível decodificar o QR Code",
     "Web Address": "Endereço Web",
     "Phone Number": "Número de Telefone",
     "Email Address": "Endereço de Email",
